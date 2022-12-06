@@ -3,21 +3,21 @@ from datetime import date
 
 
 '''
-Создан класс AddressBook наследуемый от UserDict
+Класс AddressBook наследуемый от UserDict
 в котором хранится словарь с контактами
 '''
 class AddressBook(UserDict):
     
     '''
-    Создан метод класа который записывает 
+    Метод класа который записывает 
     все данные которые вводит пользователь 
     '''
     def add_record(self, name):
         self.data[name] = Record(name)
 
     '''
-    Создан метод класа который записывает 
-    все данные которые вводит пользователь 
+    Метод класа который возвращает генератор по записям
+    реализуется для постраничного вывода списка контактов
     '''
     def iterator(self, count):
 
@@ -40,7 +40,7 @@ class AddressBook(UserDict):
 
 
 '''
-Создан класс Record, который отвечает за логику 
+Класс Record, который отвечает за логику 
 добавления/удаления/редактирования 
 необязательных полей и хранения обязательного поля Name.
 '''
@@ -53,7 +53,8 @@ class Record:
         self.birthday = Birthday(birthday) if birthday else None
 
     '''
-    Метод отвечающий за удаоение необязательных значений
+    Метод отвечающий за удаление 
+    необязательных значений
     '''
     def delete_phone(self, number):
 
@@ -68,7 +69,8 @@ class Record:
             return f"Don't find {number} in contact {self.name.value}"
 
     '''
-    Метод отвечающий за изменение необязательных значений
+    Метод отвечающий за изменение 
+    необязательных значений
     '''
     def edit_phone(self, old_number, new_number):
 
@@ -83,7 +85,8 @@ class Record:
             return f"Don't find {old_number} in contact {self.name.value}"
     
     '''
-    Метод отвечающий за добавление необязательных значений типа номер телефона
+    Метод отвечающий за добавление необязательных 
+    значений типа номер телефона
     '''
     def add_phone(self, number):
 
@@ -91,7 +94,8 @@ class Record:
         return f"Phone number {number} add in contact {self.name.value}."
     
     '''
-    Метод отвечающий за добавление необязательных значений типа дата рождения,
+    Метод отвечающий за добавление необязательных 
+    значений типа дата рождения,
     ожидается что ввод будет гггг.мм.дд
     '''    
     def set_birthday(self, birthdays_data):
@@ -100,7 +104,8 @@ class Record:
         return f"Date birthday add {self.birthday.value} to contact {self.name.value}."
 
     '''
-    Метод отвечающий за вычисление колличества дней до дня рождения
+    Метод отвечающий за вычисление колличества 
+    дней до дня рождения
     '''  
     def days_to_birthday(self):
 
@@ -116,7 +121,8 @@ class Record:
 
 
 '''
-Класс Field, на будущее
+Класс Field, логика для атрибутов value 
+классов наследников
 '''
 class Field:
     def __init__(self, value):
@@ -140,7 +146,8 @@ class Name(Field):
 
 
 '''
-Класс Phone наследуется из класса Field, в котором происходит проверка
+Класс Phone наследуется из класса Field, 
+в котором происходит проверка
 на корректность ввода номера телефона
 '''
 class Phone(Field):
@@ -156,6 +163,7 @@ class Phone(Field):
 
 '''
 Класс Birthday наследуется из класса Field
+реализует проверку введенной даты рождения контакта
 '''
 class Birthday(Field):
 
@@ -176,4 +184,4 @@ class Birthday(Field):
             self._value = birthday_date
 
         else:
-            raise ValueError("Birthday in a future")
+            raise ValueError("Date is not value. Date in a future")
