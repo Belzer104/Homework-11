@@ -18,8 +18,10 @@ def input_error(func):
 
         except IndexError:
             return 'This contac cannot be added'
+
         except AttributeError:
             return 'No have information'
+            
         except TypeError:
             return 'Unknown command or parametrs, please try again.'
                        
